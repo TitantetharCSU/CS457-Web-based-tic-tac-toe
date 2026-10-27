@@ -12,23 +12,23 @@ sequenceDiagram
     C1->>S: CONNECT
     S-->>C1: LOBBY_WAIT (waiting for opponent)
     C2->>S: CONNECT
-    Note over S: Assign X and O; initialize board, turn, scores
+    Note over S: Assign X and O<br/>Initialize board, turn, and scores
     S-->>C1: GAME_START (board, turn X, scores)
     S-->>C2: GAME_START (board, turn X, scores)
 
     C1->>S: MOVE (row: 0, col: 2)
-    Note over S: Acquire state_lock; validate sender, turn, bounds, empty cell
+    Note over S: Acquire state_lock<br/>Validate sender, turn, bounds, and empty cell
     alt Invalid or out-of-turn move
         S-->>C1: ERROR (reason)
         Note over S: Board and turn unchanged
     else Valid move
-        Note over S: Apply X move; check win or draw; increment state_version
+        Note over S: Apply X move<br/>Check win or draw<br/>Increment state_version
         alt Round continues
             Note over S: Switch active turn to Player O
             S-->>C1: STATE_UPDATE (board, turn O, version)
             S-->>C2: STATE_UPDATE (board, turn O, version)
         else X wins or board is drawn
-            Note over S: Set round FINISHED; update scores once
+            Note over S: Set round FINISHED<br/>Update scores once
             S-->>C1: STATE_UPDATE (final board, FINISHED)
             S-->>C2: STATE_UPDATE (final board, FINISHED)
             S-->>C1: GAME_OVER (winner or draw)
@@ -37,7 +37,7 @@ sequenceDiagram
             S-->>C2: SCORE_UPDATE (scores, draws)
         end
     end
-    Note over S: Queue broadcasts in order; release lock before socket I/O
+    Note over S: Queue broadcasts in order<br/>Release lock before socket I/O
 
     opt A player leaves or loses connection
         C2->>S: DISCONNECT (or TCP connection closes)
