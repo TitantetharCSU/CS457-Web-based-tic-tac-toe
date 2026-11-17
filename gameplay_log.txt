@@ -1,0 +1,14 @@
+CLIENT 1: CONNECT Alice
+CLIENT 1: LOBBY_WAIT (waiting for opponent)
+CLIENT 2: CONNECT Bob
+CLIENT 1: GAME_START as X; your turn
+CLIENT 2: GAME_START as O; waiting for Player 1
+TURN 1: player-a MOVE 0; both clients received STATE_UPDATE
+TURN 2: player-b MOVE 3; both clients received STATE_UPDATE
+TURN 3: player-a MOVE 1; both clients received STATE_UPDATE
+TURN 4: player-b MOVE 4; both clients received STATE_UPDATE
+TURN 5: player-a MOVE 2; both clients received STATE_UPDATE
+CLIENT 1: GAME_OVER (WIN); SCORE_UPDATE Alice=1 Bob=0
+CLIENT 2: GAME_OVER (LOSS); SCORE_UPDATE Alice=1 Bob=0
+BOTH CLIENTS: NEW_ROUND confirmed; scores preserved
+CLIENT 1: DISCONNECT
